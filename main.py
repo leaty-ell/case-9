@@ -269,9 +269,9 @@ def draw_tessellation(num_hexagons: int, color1: str, color2: str,
 
 
 def main() -> None:
-    """Main function to run the hexagonal mosaic program."""
-    print(ru.PROGRAM_TITLE)
-    
+    """
+    Main function to run the hexagonal mosaic program.
+    """
     color1 = get_color_choice(ru.CHOOSE_FIRST_COLOR)
     color2 = get_color_choice(ru.CHOOSE_SECOND_COLOR)
     placement = get_placement_choice()
