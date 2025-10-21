@@ -1,6 +1,7 @@
 import turtle
 import math
 import random
+import ru_local as ru
 
 
 def calculate_side_length(num_hexagons: int) -> float:
@@ -123,27 +124,16 @@ def get_color_choice(prompt: str) -> str:
     Returns:
         Selected color name in English
     """
-    colors = {
-        'красный': 'red',
-        'синий': 'blue', 
-        'зеленый': 'green',
-        'желтый': 'yellow',
-        'фиолетовый': 'purple',
-        'оранжевый': 'orange',
-        'розовый': 'pink',
-        'голубой': 'cyan'
-    }
-    
-    print("Доступные цвета:")
-    for color_name in colors.keys():
+    print(ru.AVAILABLE_COLORS)
+    for color_name in ru.COLOR_NAMES.keys():
         print(f"  {color_name}")
     
     while True:
         choice = input(prompt).strip().lower()
-        if choice in colors:
-            return colors[choice]
+        if choice in ru.COLOR_NAMES:
+            return ru.COLOR_NAMES[choice]
         else:
-            print("Недопустимый цвет. Попробуйте снова.")
+            print(ru.INVALID_COLOR)
 
 
 def get_placement_choice() -> str:
@@ -154,13 +144,13 @@ def get_placement_choice() -> str:
         Placement type: 'alternating' or 'gradient'
     """
     while True:
-        choice = input("Выберите вариант размещения цветов (1-чередование, 2-градиент): ").strip()
+        choice = input(ru.PLACEMENT_CHOICE).strip()
         if choice == '1':
-            return 'alternating'
+            return ru.ALTERNATING
         elif choice == '2':
-            return 'gradient'
+            return ru.GRADIENT
         else:
-            print("Неверный выбор! Введите 1 или 2.")
+            print(ru.INVALID_CHOICE)
 
 
 def get_num_hexagons() -> int:
@@ -172,13 +162,13 @@ def get_num_hexagons() -> int:
     """
     while True:
         try:
-            n = int(input("Введите количество шестиугольников в ряду (4-20): "))
+            n = int(input(ru.HEXAGON_COUNT_PROMPT))
             if 4 <= n <= 20:
                 return n
             else:
-                print("Число должно быть от 4 до 20!")
+                print(ru.NUMBER_RANGE_ERROR)
         except ValueError:
-            print("Неверный ввод! Введите число.")
+            print(ru.INVALID_NUMBER)
 
 
 def hexagon_vertices(center_x: float, center_y: float, side_len: float) -> list:
@@ -266,7 +256,7 @@ def draw_tessellation(num_hexagons: int, color1: str, color2: str,
             if col % 2 == 1:
                 cy -= hex_height / 2
 
-            if placement == 'alternating':
+            if placement == ru.ALTERNATING:
                 color = color1 if (row + col) % 2 == 0 else color2
             else:
                 color = get_gradient_color(color1, color2, row, col, 
@@ -280,22 +270,22 @@ def draw_tessellation(num_hexagons: int, color1: str, color2: str,
 
 def main() -> None:
     """Main function to run the hexagonal mosaic program."""
-    print("=== Шестиугольная мозаика ===")
+    print(ru.PROGRAM_TITLE)
     
-    color1 = get_color_choice("Выберите первый цвет: ")
-    color2 = get_color_choice("Выберите второй цвет: ")
+    color1 = get_color_choice(ru.CHOOSE_FIRST_COLOR)
+    color2 = get_color_choice(ru.CHOOSE_SECOND_COLOR)
     placement = get_placement_choice()
     num_hexagons = get_num_hexagons()
 
     screen = turtle.Screen()
     screen.setup(width=500, height=500)
-    screen.title("Шестиугольная мозаика")
+    screen.title(ru.WINDOW_TITLE)
     screen.bgcolor("white")
     screen.colormode(255)
 
     draw_tessellation(num_hexagons, color1, color2, placement)
 
-    print("\nМозаика готова! Нажмите на окно для выхода.")
+    print(f"\n{ru.MOSAIC_READY}")
     screen.exitonclick()
 
 
