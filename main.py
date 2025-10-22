@@ -1,3 +1,7 @@
+# CASE-8
+# DEVELOPERS: Nazarenko V., Smorodina A., Ponasenko E., Limanova E.
+#
+
 import turtle
 import math
 import random
